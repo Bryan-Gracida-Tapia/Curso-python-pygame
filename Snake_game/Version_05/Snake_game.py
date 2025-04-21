@@ -8,6 +8,7 @@ import pygame
 from Game_functionalities import game_event,screen_refresh
 from Configuration import Configurations
 from Snake import Snakeblock
+from pygame.sprite import Group
 
 
 
@@ -31,6 +32,10 @@ def run_game()->None:
     snake_head = Snakeblock(is_head= True)
     snake_head.snake_head_init()
 
+    # Se crea un grupo para almacenar el cuerpo de 'la serpiente
+    snake_body = Group()
+    snake_body.add(snake_head)
+
     # Ciclo principal del juego.
     game_over = False
     while not game_over:
@@ -38,7 +43,7 @@ def run_game()->None:
         game_over = game_event()
 
         # Dibujar los elementos graficos en la panatalla.
-        screen_refresh(screen, clock, snake_head)
+        screen_refresh(screen,clock,snake_body)
 
     pygame.quit()
 
