@@ -1,80 +1,93 @@
 import pygame
 from Configuration import Configurations
-from Snake import Snakeblock
+from Snake import SnakeBlock
 
-
-def game_event()-> bool:
-
+def game_events() -> bool:
     """
-    Funcion que administra los eventos del juego
-
-    :return: bandera de fin de juego
+    Función que administra los eventos del juego.
+    :return: La bandera de fin del juego.
     """
+    # Se declara la bandera de fin del juego que se retorna.
     game_over = False
 
-    # verificar los eventos del juego.
+    # Se verifican los eventos (teclado y ratón) del juego.
     for event in pygame.event.get():
+        # El evento es un clic para cerrar el juego.
         if event.type == pygame.QUIT:
             game_over = True
-        if event.type == pygame.KEYDOWN:
-            if event.type == pygame.K_RIGHT:    # verificar movimiento a la derecha.
-                Snakeblock.set_is_moving_right(True)
-                Snakeblock.set_is_moving_letf(False)
-                Snakeblock.set_is_moving_up(False)
-                Snakeblock.set_is_moving_down(False)
 
-            if event.type == pygame.K_LEFT:     # verificar movimiento a la izquierda.
-                Snakeblock.set_is_moving_right(False)
-                Snakeblock.set_is_moving_letf(True)
-                Snakeblock.set_is_moving_up(False)
-                Snakeblock.set_is_moving_down(False)
+        # El evento es presionar una tecla (KEYDOWN).
+        elif event.type == pygame.KEYDOWN:
+            # Movimiento hacia la derecha.
+            if event.key == pygame.K_RIGHT:
+                SnakeBlock.set_is_moving_right(True)
+                SnakeBlock.set_is_moving_left(False)
+                SnakeBlock.set_is_moving_up(False)
+                SnakeBlock.set_is_moving_down(False)
 
-            if event.type == pygame.K_UP:       # verificar movimiento hacia arriba.
-                Snakeblock.set_is_moving_right(False)
-                Snakeblock.set_is_moving_letf(False)
-                Snakeblock.set_is_moving_up(True)
-                Snakeblock.set_is_moving_down(False)
+            # Movimiento hacia la izquierda.
+            if event.key == pygame.K_LEFT:
+                SnakeBlock.set_is_moving_right(False)
+                SnakeBlock.set_is_moving_left(True)
+                SnakeBlock.set_is_moving_up(False)
+                SnakeBlock.set_is_moving_down(False)
 
-            if event.type == pygame.K_DOWN:     # verificar movimiento hacia abajo.
-                Snakeblock.set_is_moving_right(False)
-                Snakeblock.set_is_moving_letf(False)
-                Snakeblock.set_is_moving_up(False)
-                Snakeblock.set_is_moving_down(True)
+            # Movimiento hacia arriba.
+            if event.key == pygame.K_UP:
+                SnakeBlock.set_is_moving_right(False)
+                SnakeBlock.set_is_moving_left(False)
+                SnakeBlock.set_is_moving_up(True)
+                SnakeBlock.set_is_moving_down(False)
 
+            # Movimiento hacia abajo.
+            if event.key == pygame.K_DOWN:
+                SnakeBlock.set_is_moving_right(False)
+                SnakeBlock.set_is_moving_left(False)
+                SnakeBlock.set_is_moving_up(False)
+                SnakeBlock.set_is_moving_down(True)
+
+    # Se regresa la bandera.
     return game_over
 
-def snake_movment(snake_body : pygame.sprite.Group):
+def snake_movement(snake_body: pygame.sprite.Group) -> None:
     """
-    Función que gestiona el movimiento del cuarpo de la serpiente.
+    Función que gestiona los movimientos de los bloques que componen el cuerpo de la serpiente.
     :param snake_body: Grupo con el cuerpo de la serpiente.
     """
-    head = snake_body.sprites()[0]
 
-    if Snakeblock.get_is_moving_right():
+    # El movimiento de la cabeza de la serpiente depende de las banderas de movimiento.
+    head = snake_body.sprites()[0]          # La cabeza de la serpiente es el elemento [0] del grupo.
+
+    if SnakeBlock.get_is_moving_right():
         head.rect.x += Configurations.get_snake_block_size()
 
-    elif Snakeblock.get_is_moving_letf():
+    elif SnakeBlock.get_is_moving_left():
         head.rect.x -= Configurations.get_snake_block_size()
 
-    elif Snakeblock.get_is_moving_up():
-        head.rect.y += Configurations.get_snake_block_size()
-
-    elif Snakeblock.get_is_moving_down():
+    elif SnakeBlock.get_is_moving_up():
         head.rect.y -= Configurations.get_snake_block_size()
 
+    elif SnakeBlock.get_is_moving_down():
+        head.rect.y += Configurations.get_snake_block_size()
 
-def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock, snake_body: pygame.sprite.Group) -> None:
-    """
-    Funcion que administra los elementos visuales del juego
-    """
 
-    # Fondo de la pantalla en formato RGB
-    screen.fill(Configurations.get_background())
-    # Se dibuja el cuerpo de la serpiente
-    for snake_block in snake_body.sprites():
+def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
+                   snake_body: pygame.sprite.Group) -> None:
+    """
+    Función que administra los elementos de la pantalla.
+    :param screen: Objeto con la pantalla.
+    :param clock: Objeto con el reloj del videojuego.
+    :param snake_body: Grupo con el cuerpo de la serpiente.
+    """
+    # Se dibujan los elementos en la pantalla.
+    screen.fill(Configurations.get_background())    # Fondo de la pantalla en formato RGB.
+
+    # Se dibuja la serpiente, dibujando primero el último bloque y al último la cabeza de la serpiente.
+    for snake_block in reversed(snake_body.sprites()):
         snake_block.blit(screen)
-    # Se actualiza la pantalla.
+
+    # Se actualiza la pantalla, dando la impresión de movimiento.
     pygame.display.flip()
 
-    # Se controla la velocidad de FPS del juego
+    # Se controla la velocidad de fotogramas (FPS) del videojuego.
     clock.tick(Configurations.get_fps())
