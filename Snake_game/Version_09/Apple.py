@@ -1,5 +1,3 @@
-from itertools import repeat
-
 import pygame
 from random import randint
 from pygame.sprite import Sprite

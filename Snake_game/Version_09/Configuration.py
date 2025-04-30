@@ -25,7 +25,7 @@ class Configurations:
     _background_image_path = "../Media/fondo.jpg"
     _image_apple_path = "../Media/apple1.png"
     _image_snake_path_head = "../Media/head1.png"
-    _image_snake_path_body = "../Media/body1.png"
+    _image_snake_path_body = ["../Media/body1.png","../Media/body2.png","../Media/body3.png"]
 
 
     @classmethod
@@ -120,8 +120,9 @@ class Configurations:
         return cls._image_snake_path_head
 
     @classmethod
-    def get_image_snake_body(cls) -> str:
+    def get_image_snake_body(cls) -> [str,str,str]:
         """
-        Getter para _image_snake_path_body.
+        Getter para _image_snake_path_body1.
         """
         return cls._image_snake_path_body
+

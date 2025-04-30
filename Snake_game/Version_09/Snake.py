@@ -1,7 +1,10 @@
+from unittest.mock import patch
+
 import pygame
 from pygame.sprite import Sprite
 from Configuration import Configurations
-from random import randint
+from random import randint, choice
+
 
 class SnakeBlock(Sprite):
     """
@@ -31,7 +34,8 @@ class SnakeBlock(Sprite):
         if is_head:
             image_path = Configurations.get_image_snake_head()
         else:
-            image_path = Configurations.get_image_snake_body()
+            body_images=Configurations.get_image_snake_body()
+            image_path = choice(body_images)
 
         self.image = pygame.image.load(image_path)
 
@@ -46,7 +50,16 @@ class SnakeBlock(Sprite):
         Se utiliza para dibujar el bloque de la serpiente en la pantalla.
         :param screen: Pantalla en donde se dibuja el bloque.
         """
-        screen.blit(self.image, self.rect)
+        angle = 0
+        if SnakeBlock.get_is_moving_up():
+            angle = 90
+        elif SnakeBlock.get_is_moving_left():
+            angle = 180
+        elif SnakeBlock.get_is_moving_down():
+            angle = 270
+
+        image_flip = pygame.transform.rotate(self.image,angle)
+        screen.blit(image_flip,self.rect)
 
 
     def snake_head_init(self) -> None:
