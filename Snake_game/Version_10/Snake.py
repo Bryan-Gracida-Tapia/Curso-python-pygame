@@ -31,27 +31,7 @@ class SnakeBlock(Sprite):
         super().__init__()
         #////////////////////////////////////////////////////////////////////////////////////
         snake_size = Configurations.get_snake_block_size()
-
-        self._snake_frames = []
-
-        for i in range(len(Configurations.get_image_snake_head())):
-            frame = pygame.image.load(Configurations.get_image_snake_head()[i])
-            frame = pygame.transform.scale(frame, (snake_size, snake_size))
-            self._snake_frames.append(frame)
-
-        self._last_update_time = pygame.time.get_ticks()
-
-        self._frame_index = 0
-
-        # image_apple_path = Configurations.get_image_apple()[0]
-        # self.image = pygame.transform.scale(self.image,(apple_size,apple_size))
-
-        self.image = self._snake_frames[self._frame_index]
-        self._frame_index = 1
-
         if is_head:
-            snake_size = Configurations.get_snake_block_size()
-
             self._snake_frames = []
 
             for i in range(len(Configurations.get_image_snake_head())):
@@ -73,18 +53,6 @@ class SnakeBlock(Sprite):
 
             self.image = pygame.transform.scale(self.image, (snake_size, snake_size))
         #///////////////////////////////////////////////////////////////////////////////////
-        # Se selecciona el color dependiendo de si es o no la cabeza de la serpiente.
-        '''
-        if is_head:
-            image_path = Configurations.get_image_snake_head()
-        else:
-            body_images=Configurations.get_image_snake_body()
-            image_path = choice(body_images)
-
-            self.image = pygame.image.load(image_path)
-    
-            self.image = pygame.transform.scale(self.image, (snake_size,snake_size))
-        '''
         # Se obtiene el rectángulo que representa la posición del sprite.
         self.rect = self.image.get_rect()
 
