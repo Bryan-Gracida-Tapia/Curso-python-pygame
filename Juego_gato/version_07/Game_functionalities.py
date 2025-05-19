@@ -18,15 +18,15 @@ def game_events(marks: pygame.sprite.Group, turn_image, audio: Audio)->bool:
 
     used_cells = [mark.get_cell_number() for mark in marks]
 
-    # llaves de celda para obtener la posición según la letra que se presione.
-    key_to_cell = {
-        pygame.K_q: 1, pygame.K_w: 2, pygame.K_e: 3,
-        pygame.K_a: 4, pygame.K_s: 5, pygame.K_d: 6,
-        pygame.K_z: 7, pygame.K_x: 8, pygame.K_c: 9,
-    }
 
     # Se verifican los eventos(teclado y ratón) del juego
     for event in pygame.event.get():
+        # llaves de celda para obtener la posición según la letra que se presione.
+        key_to_cell = {
+            pygame.K_q: 1, pygame.K_w: 2, pygame.K_e: 3,
+            pygame.K_a: 4, pygame.K_s: 5, pygame.K_d: 6,
+            pygame.K_z: 7, pygame.K_x: 8, pygame.K_c: 9,
+        }
         # Un clic en cerrar el juego
         if event.type == pygame.QUIT: game_over = True
 
@@ -116,15 +116,15 @@ def game_over_screen(screen: pygame.surface.Surface,
     result_image = ResultsImage(result)
     credits = CreditsImage()
 
-    for _ in range(6):
+    for i in range(8):
         # Muestra el resultado
         screen_refresh(screen, clock, background, marks, turn_image)
         screen.blit(result_image.image, result_image.rect)
         screen.blit(credits.image, credits.rect)
         pygame.display.flip()
-        pygame.time.wait(500)
+        pygame.time.wait(Configurations.get_time_over())
 
         # Oculta el resultado (pero mantiene fondo y marcas)
         screen_refresh(screen, clock, background, marks, turn_image)
         pygame.display.flip()
-        pygame.time.wait(500)
+        pygame.time.wait(Configurations.get_time_over())

@@ -43,7 +43,7 @@ class TurnImage(pygame.sprite.Sprite):
 
         self.image = self.image_x
         self.rect = self.image.get_rect()
-        self.rect.topleft = (450,50)     # Se centra la imagen de turno
+        self.rect.topleft = Configurations.get_center_turn()    # Se centra la imagen de turno
 
     def change_turn(self, current_player: str) -> None:
         if current_player == "X": self.image = self.image_o
@@ -60,18 +60,18 @@ class ResultsImage:
             path = Configurations.get_draw_path()
 
         self.image = pygame.image.load(path)
-        self.image = pygame.transform.scale(self.image, (400, 400))
+        self.image = pygame.transform.scale(self.image, Configurations.get_scale_image())
         self.rect = self.image.get_rect()
-        self.rect.center = (640, 360)
+        self.rect.center = Configurations.get_center()
 
 
 class CreditsImage:
     def __init__(self):
         path = Configurations.get_credits_image_path()
         self.image = pygame.image.load(path)
-        self.image = pygame.transform.scale(self.image, (400, 100))
+        self.image = pygame.transform.scale(self.image, Configurations.get_scale_image2())
         self.rect = self.image.get_rect()
-        self.rect.center = (600, 600)
+        self.rect.center = Configurations.get_center2()
 
 class Audio:
     def __init__(self):

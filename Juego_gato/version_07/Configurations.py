@@ -15,8 +15,14 @@ class Configurations:
     _game_title = "Juego del gato"   #Título del juego
     _background = (50, 50, 50)  # Fondo de la pantalla en formato RGB
     _fps = 12
-    _game_over_screen_time = 3
 
+    _game_over_screen_time = 3
+    _game_over_time = 500
+    _scale_image = (400, 400)
+    _scale_image2 = (400, 100)
+    _center = (640, 360)
+    _center2 = (600, 600)
+    _center_turn = (450,50)
     #Media del juego
     _background_image_path= "../Media/media_juego_gato/background_image.png"
     _mark_x_path = "../Media/media_juego_gato/markX.png"
@@ -89,6 +95,54 @@ class Configurations:
         :return:
         """
         return cls._fps
+
+    @classmethod
+    def get_time_over(cls) -> int:
+        """
+        Getter para _game_over_time.
+        :return:
+        """
+        return cls._game_over_time
+
+    @classmethod
+    def get_scale_image(cls) -> tuple[int, int]:
+        """
+        Getter para _scale_image
+        :return:
+        """
+        return cls._scale_image
+
+    @classmethod
+    def get_scale_image2(cls) -> tuple[int, int]:
+        """
+        Getter para _scale_image2
+        :return:
+        """
+        return cls._scale_image2
+
+    @classmethod
+    def get_center(cls) -> tuple[int, int]:
+        """
+        Getter para _center.
+        :return:
+        """
+        return cls._center
+
+    @classmethod
+    def get_center2(cls) -> tuple[int, int]:
+        """
+        Getter para _center2.
+        :return:
+        """
+        return cls._center2
+
+    @classmethod
+    def get_center_turn(cls) -> tuple[int, int]:
+        """
+        Getter para _center2.
+        :return:
+        """
+        return cls._center_turn
 
     @classmethod
     def get_background_image_path(cls)->str:
@@ -198,6 +252,6 @@ class ResultsImage:
             path = Configurations.get_draw_path()
 
         self.image = pygame.image.load(path)
-        self.image = pygame.transform.scale(self.image, (400, 400))
+        self.image = pygame.transform.scale(self.image, Configurations.get_scale_image())
         self.rect = self.image.get_rect()
-        self.rect.center = (640, 360)
+        self.rect.center = Configurations.get_center()
