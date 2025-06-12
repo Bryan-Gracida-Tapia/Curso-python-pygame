@@ -9,38 +9,43 @@ from Media import Background
 from soldier import Soldier
 from Shot import  Shot
 
-def game_events(soldier:Soldier,shots:pygame.sprite.Group)->bool:
+def game_events(soldier: Soldier, shots: pygame.sprite.Group) -> bool:
     """
     Función que administra los eventos de juego.
+    :param soldier: Objeto del soldado que recibe los eventos.
+    :param shots: Grupo de disparos activos.
     :return: la bandera del fin del juego.
     """
-    game_over=False
+    game_over = False
 
-    # Se verifican los eventos (teclado, ratón) del juego.
     for event in pygame.event.get():
-        # Un clic en cerrar el juego
+        # Evento de cierre del juego
         if event.type == pygame.QUIT:
             game_over = True
-        if event.type == pygame.KEYDOWN:
+
+        # Teclas presionadas
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 soldier.is_moving_up = True
-            if event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN:
                 soldier.is_moving_down = True
+            elif event.key == pygame.K_SPACE:
+                # Crear y agregar un disparo
+                new_shot = Shot(soldier)
+                shots.add(new_shot)
+                soldier.is_shoot = True  # activa animación de disparo
 
-        if event.type == pygame.KEYUP:
+        # Teclas soltadas
+        elif event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
                 soldier.is_moving_up = False
-            if event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN:
                 soldier.is_moving_down = False
+            elif event.key == pygame.K_SPACE:
+                soldier.is_shoot = False  # desactiva animación de disparo
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                new_shot = Shot(soldier)
-                #shots.remove(shots.sprites()[0])
-                shots.add(new_shot)
-
-    #Se regresa la bandera
     return game_over
+
 
 def screen_refresh(screen: pygame.surface.Surface,clock:pygame.time.Clock,
                    background:Background, soldier:Soldier, shots:pygame.sprite.Group)->None:
