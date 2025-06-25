@@ -29,11 +29,10 @@ def game_events(soldier: Soldier, shots: pygame.sprite.Group) -> bool:
                 soldier.is_moving_up = True
             elif event.key == pygame.K_DOWN:
                 soldier.is_moving_down = True
-            elif event.key == pygame.K_SPACE:
-                # Crear y agregar un disparo
+            if event.key == pygame.K_SPACE:
                 new_shot = Shot(soldier)
-                shots.add(new_shot)
-                soldier.is_shoot = True  # activa animación de disparo
+                gunshots.add(new_shot)
+                soldier.shoots()
 
         # Teclas soltadas
         elif event.type == pygame.KEYUP:
