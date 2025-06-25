@@ -34,7 +34,7 @@ from time import sleep
 # Se importan los módulos necesarios.
 import pygame
 from Configurations import Configurations
-from Game_functionalities import game_events, screen_refresh,check_collisions,game_over_screen
+from Game_functionalities import game_events, screen_refresh,check_collisions
 from Media import Background,Audio,Scoreboard
 from soldier import Soldier
 from pygame.sprite import Group
@@ -95,7 +95,10 @@ def run_game() -> None:
         screen_refresh(screen, clock, background, soldier, gunshots,aliens,scoreboard)
 
         if game_over:
-            game_over_screen(audio)
+            # ejemplo del audio de juego perdido
+            audio.play_game_over_sound()
+            sleep(3)
+
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()
 

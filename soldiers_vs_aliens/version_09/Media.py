@@ -111,13 +111,3 @@ class Scoreboard:
 
     def blit(self, screen: pygame.surface.Surface):
         screen.blit(self.image, self.rect)
-
-class GameOverImage:
-    def __init__(self):
-        self.image = pygame.image.load("../Media/media snake_game/game_over_image.png")
-        self.rect = self.image.get_rect()
-
-    def blit(self, screen: pygame.surface.Surface) -> None:
-        self.rect.centerx = screen.get_rect().centerx
-        self.rect.bottom = screen.get_rect().bottom - Configurations.get_soldier_size()
-        screen.blit(self.image, self.rect)
